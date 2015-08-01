@@ -1,0 +1,10 @@
+{
+	"ImportPath": "heroku.com/tg-bot",
+	"GoVersion": "go1.4.2",
+	"Deps": [
+		{
+			"ImportPath": "golang.org/x/net/html",
+			"Rev": "51854aba4682903632d14998d47781fe34e62a02"
+		}
+	]
+}

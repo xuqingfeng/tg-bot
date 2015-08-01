@@ -1,0 +1,6 @@
+{
+  "domain": "YOURDOMAIN",
+  "api_url": "https://api.telegram.org/bot",
+  "token": "YOURTELEGRAMTOKEN",
+  "google_top": 5
+}
