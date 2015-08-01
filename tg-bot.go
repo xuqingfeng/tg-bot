@@ -6,9 +6,11 @@ import (
 	"os"
 	"encoding/json"
 	"strings"
+	"math/rand"
 	"heroku.com/tg-bot/util"
 	"heroku.com/tg-bot/biubot"
 	"heroku.com/tg-bot/google"
+	"heroku.com/tg-bot/reddit"
 )
 
 var hostname string
@@ -22,8 +24,6 @@ func main() {
 
 	webHookUrl := biubot.GetWebHookUrl()
 	http.HandleFunc(webHookUrl, serveWebHook)
-
-	http.HandleFunc("/google", serveGoogle)
 
 
 	hostname, _ := os.Hostname()
@@ -57,7 +57,9 @@ func serveWebHook(w http.ResponseWriter, req *http.Request) {
 			}
 		}
 	} else if commands[0] == "/yo" {
-		tgResponse = strings.TrimLeft(userInput, "/yo")
+		randNum := rand.Intn(10)
+		photoLinks := reddit.GetPhoto()
+		tgResponse = "http:"+photoLinks[randNum]
 	} else if commands[0] == "/h" {
 		tgResponse = "/g [query] - Search In Google\n"+
 		"/yo - Take It Easy\n"+
