@@ -4,23 +4,31 @@ import (
 	"fmt"
 	"net/http"
 	"os"
-	"encoding/json"
-	"strings"
-	"math/rand"
 	"heroku.com/tg-bot/util"
 	"heroku.com/tg-bot/biubot"
+	"encoding/json"
+	"strings"
 	"heroku.com/tg-bot/google"
+	"math/rand"
 	"heroku.com/tg-bot/reddit"
+	"html/template"
 )
+
+type Frequency struct {
+	Request int64
+}
 
 var hostname string
 var config biubot.Config
+var fre Frequency
 
 func main() {
 
 	config = biubot.GetConfig()
+	fre.Request = 0
 
 	http.HandleFunc("/", serveHomePage)
+	http.Handle("/assets/", http.FileServer(http.Dir("templates/")))
 
 	webHookUrl := biubot.GetWebHookUrl()
 	http.HandleFunc(webHookUrl, serveWebHook)
@@ -40,6 +48,8 @@ func main() {
 
 func serveWebHook(w http.ResponseWriter, req *http.Request) {
 
+	fre.Request++
+
 	decoder := json.NewDecoder(req.Body)
 	var update biubot.Update
 	decoder.Decode(&update)
@@ -57,9 +67,10 @@ func serveWebHook(w http.ResponseWriter, req *http.Request) {
 			}
 		}
 	} else if commands[0] == "/yo" {
+
 		randNum := rand.Intn(10)
 		photoLinks := reddit.GetPhoto()
-		tgResponse = "http:"+photoLinks[randNum]
+		tgResponse = photoLinks[randNum]
 	} else if commands[0] == "/h" {
 		tgResponse = "/g [query] - Search In Google\n"+
 		"/yo - Take It Easy\n"+
@@ -72,10 +83,8 @@ func serveWebHook(w http.ResponseWriter, req *http.Request) {
 
 func serveHomePage(w http.ResponseWriter, res *http.Request) {
 
-	// hostname = res.Host
-	// URL？
-	hostname, _ := os.Hostname()
-	fmt.Fprintln(w, hostname)
+	tp, _ := template.ParseFiles("templates/index.html")
+	tp.Execute(w, fre)
 }
 
 

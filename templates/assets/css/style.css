@@ -1,0 +1,38 @@
+.container {
+    padding-top: 15px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 30%;
+    width: 60%;
+}
+
+header {
+    font-size: 22px;
+    float: left;
+}
+
+.biubot {
+    color: #FAD359;
+}
+
+a {
+    color: #2A7ABD
+}
+
+div.split {
+    margin-top: 50px;
+}
+
+nav {
+    float: right
+}
+
+nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+nav ul li {
+    display: inline;
+}
