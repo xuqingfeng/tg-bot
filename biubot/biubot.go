@@ -2,18 +2,13 @@ package biubot
 import (
 	"io/ioutil"
 	"encoding/json"
+	"heroku.com/tg-bot/util"
 	"net/http"
 	"net/url"
 	"strconv"
-	"heroku.com/tg-bot/util"
+	"heroku.com/tg-bot/common"
+	"io"
 )
-
-type Config struct {
-	Domain     string
-	Api_url    string
-	Token      string
-	Google_top int
-}
 
 /*
 https://core.telegram.org/bots/api
@@ -65,6 +60,12 @@ type PhotoSize struct {
 	Width     int
 	Height    int
 	File_size int
+}
+
+type File struct {
+	File_id   string
+	File_size int
+	File_path string
 }
 
 type Audio struct {
@@ -121,27 +122,20 @@ type ReplyKeyboardHide struct {
 type ForceReply struct {
 }
 
-var config Config
-
+var config common.Config
 func init() {
-
-	configData, err := ioutil.ReadFile("./config.json")
-	util.PanicIf(err)
-	json.Unmarshal(configData, &config)
-}
-
-func GetConfig() (Config) {
-	return config
+	config = common.GetConfig()
 }
 
 func GetWebHookUrl() (string) {
 
+	// fix bug
 	return "/"+config.Token
 }
 
 func GetUpdates() (updates []Update) {
 
-	resp, err := http.Get(config.Api_url+config.Token+"/getUpdates")
+	resp, err := http.Get(config.ApiUrl+config.Token+"/getUpdates")
 	util.PanicIf(err)
 	body, err := ioutil.ReadAll(resp.Body)
 	resp.Body.Close()
@@ -168,16 +162,78 @@ func GetLargestUpdateId(updates []Update) (int) {
 	return largestId
 }
 
+//func GetUpdates() (updates string){
+//
+//	resp, err := http.Get(config.Api_url+config.Token+"/getUpdates")
+//	util.PanicIf(err)
+//	body, err := ioutil.ReadAll(resp.Body)
+//	updates = string(body)
+//	resp.Body.Close()
+//	return
+//}
+
+
+/*
+	strconv.Itoa()
+	not
+	string()
+*/
 func SendMessage(chat_id int, text string) {
 
-	type PostData struct {
-		Chat_id int `json:"chat_id"`
-		Text    string `json:"text"`
-	}
-	
-	resp, err := http.PostForm(config.Api_url+config.Token+"/sendMessage", url.Values{"chat_id": {strconv.Itoa(chat_id)}, "text": {text}})
+	resp, err := http.PostForm(config.ApiUrl+config.Token+"/sendMessage", url.Values{"chat_id": {strconv.Itoa(chat_id)}, "text": {text}})
 
 	defer resp.Body.Close()
 	util.PanicIf(err)
+}
+
+func SendLocation(chat_id int, longitude float64, latitude float64) {
+
+	// 'f'?
+	resp, err := http.PostForm(config.ApiUrl+config.Token+"/sendLocation", url.Values{"chat_id": {strconv.Itoa(chat_id)}, "latitude": {strconv.FormatFloat(latitude, 'f', 6, 64)}, "longitude": {strconv.FormatFloat(longitude, 'f', 6, 64)}})
+	defer resp.Body.Close()
+	util.PanicIf(err)
+}
+
+func SendPhoto(chat_id int, photo_id string) {
+
+	resp, err := http.PostForm(config.ApiUrl+config.Token+"/sendPhoto", url.Values{"chat_id": {strconv.Itoa(chat_id)}, "photo": {photo_id}})
+	defer resp.Body.Close()
+	util.PanicIf(err)
+}
+
+func GetFile(file_id string) (filePath string) {
+
+	filePath = ""
+	resp, err := http.PostForm(config.ApiUrl+config.Token+"/getFile", url.Values{"file_id": {file_id}})
+	if err != nil {
+		return
+	}
+	type FileData struct {
+		Ok bool
+		Result File
+	}
+	if resp.StatusCode == 200 {
+		respInByte, _ := ioutil.ReadAll(resp.Body)
+		var fileData FileData
+		err := json.Unmarshal(respInByte, &fileData)
+		defer resp.Body.Close()
+
+		if err != nil {
+			return
+		}else{
+			filePath = fileData.Result.File_path
+		}
+	}
+
+	return
+}
+
+func GetFileData(filePath string) (r io.Reader){
+
+	resp, _ := http.Get(config.FileApiUrl + config.Token + "/" + filePath)
+	if resp.StatusCode == 200 {
+		r = resp.Body
+	}
+	return
 }
 

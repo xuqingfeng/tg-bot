@@ -16,10 +16,10 @@ import (
 	"strings"
 	"unicode/utf8"
 
+	"golang.org/x/net/html"
 	"golang.org/x/text/encoding"
 	"golang.org/x/text/encoding/charmap"
 	"golang.org/x/text/transform"
-	"heroku.com/tg-bot/Godeps/_workspace/src/golang.org/x/net/html"
 )
 
 // Lookup returns the encoding with the specified label, and its canonical

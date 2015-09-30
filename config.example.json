@@ -1,6 +1,12 @@
 {
-  "domain": "YOURDOMAIN",
-  "api_url": "https://api.telegram.org/bot",
-  "token": "YOURTELEGRAMTOKEN",
-  "google_top": 5
+  "DOMAIN": "https://tg-bot.herokuapp.com/",
+  "API_URL": "https://api.telegram.org/bot",
+  "FILE_API_URL": "https://api.telegram.org/file/bot",
+  "TOKEN": "***",
+  "FIREBASE_URL": "***",
+  "GOOGLE_TOP": 6,
+  "QINIU_ACCESS_KEY": "***",
+  "QINIU_SECRET_KEY": "***",
+  "QINIU_DOMAIN": "***",
+  "QINIU_BUCKET_NAME": "***"
 }

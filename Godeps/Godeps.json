@@ -1,10 +1,72 @@
 {
 	"ImportPath": "heroku.com/tg-bot",
-	"GoVersion": "go1.4.2",
+	"GoVersion": "go1.5.1",
+	"Packages": [
+		"./..."
+	],
 	"Deps": [
 		{
+			"ImportPath": "golang.org/x/net/context",
+			"Rev": "c2528b2dd8352441850638a8bb678c2ad056fd3e"
+		},
+		{
 			"ImportPath": "golang.org/x/net/html",
-			"Rev": "51854aba4682903632d14998d47781fe34e62a02"
+			"Rev": "c2528b2dd8352441850638a8bb678c2ad056fd3e"
+		},
+		{
+			"ImportPath": "qiniupkg.com/api.v7/auth/qbox",
+			"Comment": "v7.0.4-2-gf7911df",
+			"Rev": "f7911dfbca7aee46f4e405f1756071ded45473ea"
+		},
+		{
+			"ImportPath": "qiniupkg.com/api.v7/conf",
+			"Comment": "v7.0.4-2-gf7911df",
+			"Rev": "f7911dfbca7aee46f4e405f1756071ded45473ea"
+		},
+		{
+			"ImportPath": "qiniupkg.com/api.v7/kodo",
+			"Comment": "v7.0.4-2-gf7911df",
+			"Rev": "f7911dfbca7aee46f4e405f1756071ded45473ea"
+		},
+		{
+			"ImportPath": "qiniupkg.com/api.v7/kodocli",
+			"Comment": "v7.0.4-2-gf7911df",
+			"Rev": "f7911dfbca7aee46f4e405f1756071ded45473ea"
+		},
+		{
+			"ImportPath": "qiniupkg.com/x/bytes.v7",
+			"Comment": "v7.0.8",
+			"Rev": "946c4a16076d6d98aeb78619e2bd4012357f7228"
+		},
+		{
+			"ImportPath": "qiniupkg.com/x/ctype.v7",
+			"Comment": "v7.0.8",
+			"Rev": "946c4a16076d6d98aeb78619e2bd4012357f7228"
+		},
+		{
+			"ImportPath": "qiniupkg.com/x/log.v7",
+			"Comment": "v7.0.8",
+			"Rev": "946c4a16076d6d98aeb78619e2bd4012357f7228"
+		},
+		{
+			"ImportPath": "qiniupkg.com/x/reqid.v7",
+			"Comment": "v7.0.8",
+			"Rev": "946c4a16076d6d98aeb78619e2bd4012357f7228"
+		},
+		{
+			"ImportPath": "qiniupkg.com/x/rpc.v7",
+			"Comment": "v7.0.8",
+			"Rev": "946c4a16076d6d98aeb78619e2bd4012357f7228"
+		},
+		{
+			"ImportPath": "qiniupkg.com/x/url.v7",
+			"Comment": "v7.0.8",
+			"Rev": "946c4a16076d6d98aeb78619e2bd4012357f7228"
+		},
+		{
+			"ImportPath": "qiniupkg.com/x/xlog.v7",
+			"Comment": "v7.0.8",
+			"Rev": "946c4a16076d6d98aeb78619e2bd4012357f7228"
 		}
 	]
 }

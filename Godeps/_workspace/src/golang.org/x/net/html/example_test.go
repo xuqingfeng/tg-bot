@@ -10,7 +10,7 @@ import (
 	"log"
 	"strings"
 
-	"heroku.com/tg-bot/Godeps/_workspace/src/golang.org/x/net/html"
+	"golang.org/x/net/html"
 )
 
 func ExampleParse() {

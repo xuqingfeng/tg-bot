@@ -19,8 +19,30 @@
     <div class="split"></div>
 
     <div align="center">
-        <span class="biubot">@BiuBot</span> has received <span>{{.Request}}</span> requests since last reboot.
+        至今 <span class="biubot">@BiuBot</span> 已经处理了 <span class="biubot" id="count">0</span> 个请求。
     </div>
 </div>
+<script>
+
+    var count = {{.}};
+    function numberAnimate(id, start, end, duration) {
+
+        var range = end - start,
+                current = start,
+                increment = end > start ? 1 : -1,
+                stepTime = Math.abs(Math.floor(duration / range)),
+                obj = document.getElementById(id);
+        var timer = setInterval(function () {
+            current += increment;
+            obj.innerHTML = current;
+            if (current == end) {
+                clearInterval(timer);
+            }
+        }, stepTime);
+    }
+
+    numberAnimate("count", 0, parseInt(count, 10), 1000);
+
+</script>
 </body>
 </html>

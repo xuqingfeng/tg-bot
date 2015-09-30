@@ -6,6 +6,7 @@ import (
 	"strings"
 )
 
+// fake; just url
 func GetPhoto()([]string) {
 
 	resp, _ := http.Get("https://www.reddit.com/r/funny/")
@@ -24,6 +25,7 @@ func getPhotoLinks(n *html.Node, links *[]string) {
 
 	if n.Type == html.ElementNode && n.Data == "a" && n.Parent.Data == "p" {
 		for _, a := range n.Attr {
+			// bad solution
 			if a.Key == "href" && strings.Contains(a.Val, "imgur.com"){
 				*links = append(*links, a.Val)
 			}

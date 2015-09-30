@@ -1,15 +1,15 @@
 package google
 import (
 	"net/http"
+	"heroku.com/tg-bot/util"
 	"io/ioutil"
-	"regexp"
 	"net/url"
 	"strings"
 	"golang.org/x/net/html"
-	"heroku.com/tg-bot/util"
 )
 
 func SearchInGoogle(query string) ([]string) {
+
 
 	resp, err := http.Get("https://www.google.com/search?q="+url.QueryEscape(query))
 	util.PanicIf(err)
@@ -19,7 +19,7 @@ func SearchInGoogle(query string) ([]string) {
 	util.PanicIf(err)
 
 	doc, _ := html.Parse(strings.NewReader(string(ret)))
-	
+
 	var links []string
 	getLinks(doc, &links)
 
